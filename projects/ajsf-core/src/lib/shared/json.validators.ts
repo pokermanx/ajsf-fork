@@ -474,8 +474,14 @@ export class JsonValidators {
     return (control: AbstractControl, invert = false): ValidationErrors|null => {
       if (isEmpty(control.value)) { return null; }
       const currentValue = control.value;
+
+      const maxDecimalPoint = Math.max(currentValue.toString().split('.')[1].length, multipleOfValue.toString().split('.')[1].length);
+
+      const fixedMultipleOfValue = multipleOfValue * Math.pow(10, maxDecimalPoint);
+      const fixedCurrentValue = currentValue * Math.pow(10, maxDecimalPoint);
+
       const isValid = isNumber(currentValue) &&
-        currentValue % multipleOfValue === 0;
+      fixedCurrentValue % fixedMultipleOfValue === 0;
       return xor(isValid, invert) ?
         null : { 'multipleOf': { multipleOfValue, currentValue } };
     };
