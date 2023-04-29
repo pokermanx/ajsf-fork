@@ -6204,6 +6204,7 @@ class JsonSchemaFormService {
         this.AngularSchemaFormCompatibility = false;
         this.tpldata = {};
         this.ajvOptions = {
+            strict: false,
             allErrors: true,
             jsonPointers: true,
             unknownFormats: 'ignore'

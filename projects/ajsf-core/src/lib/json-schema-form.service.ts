@@ -58,6 +58,7 @@ export class JsonSchemaFormService {
   tpldata: any = {};
 
   ajvOptions: any = {
+    strict: false,
     allErrors: true,
     jsonPointers: true,
     unknownFormats: 'ignore'
