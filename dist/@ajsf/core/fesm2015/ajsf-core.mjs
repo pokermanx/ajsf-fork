@@ -2796,8 +2796,11 @@ class JsonValidators {
             if (isEmpty(control.value)) {
                 return null;
             }
-            const currentValue = control.value;
-            const maxDecimalPoint = Math.max(currentValue.toString().split('.')[1].length, multipleOfValue.toString().split('.')[1].length);
+            const currentValue = (control.value || '').toString().replace(',', '.');
+            const parsedMultipleOfValue = (control.value || '').toString().replace(',', '.');
+            const lengthAfterComaOfCurrentValue = (currentValue.toString().split('.')[1] || '').length;
+            const lengthAfterComaOfMultipleOfValue = (parsedMultipleOfValue.toString().split('.')[1] || '').length;
+            const maxDecimalPoint = Math.max(lengthAfterComaOfCurrentValue, lengthAfterComaOfMultipleOfValue);
             const fixedMultipleOfValue = multipleOfValue * Math.pow(10, maxDecimalPoint);
             const fixedCurrentValue = currentValue * Math.pow(10, maxDecimalPoint);
             const isValid = isNumber(currentValue) &&
